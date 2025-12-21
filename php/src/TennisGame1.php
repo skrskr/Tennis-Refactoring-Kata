@@ -20,7 +20,7 @@ class TennisGame1 implements TennisGame
 
     public function wonPoint(string $playerName): void
     {
-        if ($playerName === self::PLAYER1) {
+        if ($this->isPlayer1($playerName)) {
             $this->m_score1++;
         } else {
             $this->m_score2++;
@@ -73,5 +73,10 @@ class TennisGame1 implements TennisGame
             }
         }
         return $score;
+    }
+
+    private function isPlayer1(string $playerName): bool
+    {
+        return $playerName === self::PLAYER1;
     }
 }
