@@ -10,6 +10,8 @@ class TennisGame1 implements TennisGame
 
     private int $m_score2 = 0;
 
+    private const PLAYER1 = 'player1';
+
     public function __construct(
         private string $player1Name,
         private string $player2Name
@@ -18,7 +20,7 @@ class TennisGame1 implements TennisGame
 
     public function wonPoint(string $playerName): void
     {
-        if ($playerName === 'player1') {
+        if ($playerName === self::PLAYER1) {
             $this->m_score1++;
         } else {
             $this->m_score2++;
