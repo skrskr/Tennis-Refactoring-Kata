@@ -92,13 +92,13 @@ class TennisGame1 implements TennisGame
         $score = '';
         $minusResult = $this->m_score1 - $this->m_score2;
         if ($minusResult === 1) {
-            $score = 'Advantage player1';
+            $score = 'Advantage ' . $this->player1Name;
         } elseif ($minusResult === -1) {
-            $score = 'Advantage player2';
+            $score = 'Advantage ' . $this->player2Name;
         } elseif ($minusResult >= 2) {
-            $score = 'Win for player1';
+            $score = 'Win for ' . $this->player1Name;
         } else {
-            $score = 'Win for player2';
+            $score = 'Win for ' . $this->player2Name;
         }
 
         return $score;
