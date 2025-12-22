@@ -33,15 +33,7 @@ class TennisGame1 implements TennisGame
         } elseif ($this->mScore1 >= 4 || $this->mScore2 >= 4) {
             $score = $this->convertWinningOrAdvantageScoresToString();
         } else {
-            for ($i = 1; $i < 3; $i++) {
-                $tempScore = $this->getTempScore($i);
-
-                if ($i !== 1) {
-                    $score .= '-';
-                }
-                
-                $score .= $this->convertTempScoreToString($tempScore);
-            }
+            $score = $this->convertTempScoreToString();
         }
         return $score;
     }
@@ -66,15 +58,26 @@ class TennisGame1 implements TennisGame
         return $i === 1 ? $this->mScore1 : $this->mScore2;
     }
 
-    private function convertTempScoreToString(int $tempScore): string
+    private function convertTempScoreToString(): string
     {
-        return match ($tempScore) {
-            0 => 'Love',
-            1 => 'Fifteen',
-            2 => 'Thirty',
-            3 => 'Forty',
-            default => '',
-        };
+        $score = '';
+        for ($i = 1; $i < 3; $i++) {
+            $tempScore = $this->getTempScore($i);
+
+            if ($i !== 1) {
+                $score .= '-';
+            }
+
+            $score .= match ($tempScore) {
+                0 => 'Love',
+                1 => 'Fifteen',
+                2 => 'Thirty',
+                3 => 'Forty',
+                default => '',
+            };
+        }
+
+        return $score;
     }
 
     private function convertEqualScoresToString(): string
