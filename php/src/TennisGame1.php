@@ -6,9 +6,9 @@ namespace TennisGame;
 
 class TennisGame1 implements TennisGame
 {
-    private int $m_score1 = 0;
+    private int $mScore1 = 0;
 
-    private int $m_score2 = 0;
+    private int $mScore2 = 0;
 
     public function __construct(
         private string $player1Name,
@@ -18,58 +18,92 @@ class TennisGame1 implements TennisGame
 
     public function wonPoint(string $playerName): void
     {
-        if ($playerName === 'player1') {
-            $this->m_score1++;
+        if ($this->isPlayer1($playerName)) {
+            $this->incrementMScore1();
         } else {
-            $this->m_score2++;
+            $this->incrementMScore2();
         }
     }
 
     public function getScore(): string
     {
         $score = '';
-        if ($this->m_score1 === $this->m_score2) {
-            $score = match ($this->m_score1) {
-                0 => 'Love-All',
-                1 => 'Fifteen-All',
-                2 => 'Thirty-All',
-                default => 'Deuce',
-            };
-        } elseif ($this->m_score1 >= 4 || $this->m_score2 >= 4) {
-            $minusResult = $this->m_score1 - $this->m_score2;
-            if ($minusResult === 1) {
-                $score = 'Advantage player1';
-            } elseif ($minusResult === -1) {
-                $score = 'Advantage player2';
-            } elseif ($minusResult >= 2) {
-                $score = 'Win for player1';
-            } else {
-                $score = 'Win for player2';
-            }
+        if ($this->mScore1 === $this->mScore2) {
+            $score = $this->convertEqualScoresToString();
+        } elseif ($this->mScore1 >= 4 || $this->mScore2 >= 4) {
+            $score = $this->convertWinningOrAdvantageScoresToString();
         } else {
-            for ($i = 1; $i < 3; $i++) {
-                if ($i === 1) {
-                    $tempScore = $this->m_score1;
-                } else {
-                    $score .= '-';
-                    $tempScore = $this->m_score2;
-                }
-                switch ($tempScore) {
-                    case 0:
-                        $score .= 'Love';
-                        break;
-                    case 1:
-                        $score .= 'Fifteen';
-                        break;
-                    case 2:
-                        $score .= 'Thirty';
-                        break;
-                    case 3:
-                        $score .= 'Forty';
-                        break;
-                }
-            }
+            $score = $this->convertTempScoreToString();
         }
+        return $score;
+    }
+
+    private function isPlayer1(string $playerName): bool
+    {
+        return $playerName === $this->player1Name;
+    }
+
+    private function incrementMScore1(): void
+    {
+        $this->mScore1++;
+    }
+
+    private function incrementMScore2(): void
+    {
+        $this->mScore2++;
+    }
+
+    private function getTempScore(int $i): int
+    {
+        return $i === 1 ? $this->mScore1 : $this->mScore2;
+    }
+
+    private function convertTempScoreToString(): string
+    {
+        $score = '';
+        for ($i = 1; $i < 3; $i++) {
+            $tempScore = $this->getTempScore($i);
+
+            if ($i !== 1) {
+                $score .= '-';
+            }
+
+            $score .= match ($tempScore) {
+                0 => 'Love',
+                1 => 'Fifteen',
+                2 => 'Thirty',
+                3 => 'Forty',
+                default => '',
+            };
+        }
+
+        return $score;
+    }
+
+    private function convertEqualScoresToString(): string
+    {
+        return match ($this->mScore1) {
+            0 => 'Love-All',
+            1 => 'Fifteen-All',
+            2 => 'Thirty-All',
+            default => 'Deuce',
+        };
+    }
+
+    private function convertWinningOrAdvantageScoresToString(): string
+    {
+        $score = '';
+        $minusResult = $this->mScore1 - $this->mScore2;
+        if ($minusResult === 1) {
+            $score = 'Advantage ' . $this->player1Name;
+        } elseif ($minusResult === -1) {
+            $score = 'Advantage ' . $this->player2Name;
+        } elseif ($minusResult >= 2) {
+            $score = 'Win for ' . $this->player1Name;
+        } else {
+            $score = 'Win for ' . $this->player2Name;
+        }
+
         return $score;
     }
 }
