@@ -6,9 +6,9 @@ namespace TennisGame;
 
 class TennisGame1 implements TennisGame
 {
-    private int $m_score1 = 0;
+    private int $mScore1 = 0;
 
-    private int $m_score2 = 0;
+    private int $mScore2 = 0;
 
     public function __construct(
         private string $player1Name,
@@ -28,9 +28,9 @@ class TennisGame1 implements TennisGame
     public function getScore(): string
     {
         $score = '';
-        if ($this->m_score1 === $this->m_score2) {
+        if ($this->mScore1 === $this->mScore2) {
             $score = $this->convertEqualScoresToString();
-        } elseif ($this->m_score1 >= 4 || $this->m_score2 >= 4) {
+        } elseif ($this->mScore1 >= 4 || $this->mScore2 >= 4) {
             $score = $this->convertWinningOrAdvantageScoresToString();
         } else {
             for ($i = 1; $i < 3; $i++) {
@@ -53,17 +53,17 @@ class TennisGame1 implements TennisGame
 
     private function incrementMScore1(): void
     {
-        $this->m_score1++;
+        $this->mScore1++;
     }
 
     private function incrementMScore2(): void
     {
-        $this->m_score2++;
+        $this->mScore2++;
     }
 
     private function getTempScore(int $i): int
     {
-        return $i === 1 ? $this->m_score1 : $this->m_score2;
+        return $i === 1 ? $this->mScore1 : $this->mScore2;
     }
 
     private function convertTempScoreToString(int $tempScore): string
@@ -79,7 +79,7 @@ class TennisGame1 implements TennisGame
 
     private function convertEqualScoresToString(): string
     {
-        return match ($this->m_score1) {
+        return match ($this->mScore1) {
             0 => 'Love-All',
             1 => 'Fifteen-All',
             2 => 'Thirty-All',
@@ -90,7 +90,7 @@ class TennisGame1 implements TennisGame
     private function convertWinningOrAdvantageScoresToString(): string
     {
         $score = '';
-        $minusResult = $this->m_score1 - $this->m_score2;
+        $minusResult = $this->mScore1 - $this->mScore2;
         if ($minusResult === 1) {
             $score = 'Advantage ' . $this->player1Name;
         } elseif ($minusResult === -1) {
@@ -103,6 +103,4 @@ class TennisGame1 implements TennisGame
 
         return $score;
     }
-
-
 }
