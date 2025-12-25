@@ -24,15 +24,7 @@ class TennisGame2 implements TennisGame
     {
         $score = '';
         if ($this->player1Point === $this->player2Point && $this->player1Point < 4) {
-            if ($this->player1Point === 0) {
-                $score = 'Love';
-            }
-            if ($this->player1Point === 1) {
-                $score = 'Fifteen';
-            }
-            if ($this->player1Point === 2) {
-                $score = 'Thirty';
-            }
+            $score = $this->convertScoreToString($this->player1Point);
             $score .= '-All';
         }
 
@@ -41,62 +33,45 @@ class TennisGame2 implements TennisGame
         }
 
         if ($this->player1Point > 0 && $this->player2Point === 0) {
-            if ($this->player1Point === 1) {
-                $this->player1Result = 'Fifteen';
-            }
-            if ($this->player1Point === 2) {
-                $this->player1Result = 'Thirty';
-            }
-            if ($this->player1Point === 3) {
-                $this->player1Result = 'Forty';
-            }
-
+            $this->player1Result = $this->convertScoreToString($this->player1Point);
             $this->player2Result = 'Love';
             $score = "{$this->player1Result}-{$this->player2Result}";
         }
 
         if ($this->player2Point > 0 && $this->player1Point === 0) {
-            if ($this->player2Point === 1) {
-                $this->player2Result = 'Fifteen';
-            }
-            if ($this->player2Point === 2) {
-                $this->player2Result = 'Thirty';
-            }
-            if ($this->player2Point === 3) {
-                $this->player2Result = 'Forty';
-            }
+            $this->player2Result = $this->convertScoreToString($this->player2Point);
             $this->player1Result = 'Love';
             $score = "{$this->player1Result}-{$this->player2Result}";
         }
 
         if ($this->player1Point > $this->player2Point && $this->player1Point < 4) {
             if ($this->player1Point === 2) {
-                $this->player1Result = 'Thirty';
+                $this->player1Result = $this->convertScoreToString($this->player1Point);
             }
             if ($this->player1Point === 3) {
-                $this->player1Result = 'Forty';
+                $this->player1Result = $this->convertScoreToString($this->player1Point);
             }
             if ($this->player2Point === 1) {
-                $this->player2Result = 'Fifteen';
+                $this->player2Result = $this->convertScoreToString($this->player2Point);
             }
             if ($this->player2Point === 2) {
-                $this->player2Result = 'Thirty';
+                $this->player2Result = $this->convertScoreToString($this->player2Point);
             }
             $score = "{$this->player1Result}-{$this->player2Result}";
         }
 
         if ($this->player2Point > $this->player1Point && $this->player2Point < 4) {
             if ($this->player2Point === 2) {
-                $this->player2Result = 'Thirty';
+                $this->player2Result = $this->convertScoreToString($this->player2Point);
             }
             if ($this->player2Point === 3) {
-                $this->player2Result = 'Forty';
+                $this->player2Result = $this->convertScoreToString($this->player2Point);
             }
             if ($this->player1Point === 1) {
-                $this->player1Result = 'Fifteen';
+                $this->player1Result = $this->convertScoreToString($this->player1Point);
             }
             if ($this->player1Point === 2) {
-                $this->player1Result = 'Thirty';
+                $this->player1Result = $this->convertScoreToString($this->player1Point);
             }
             $score = "{$this->player1Result}-{$this->player2Result}";
         }
@@ -137,5 +112,16 @@ class TennisGame2 implements TennisGame
     private function incrementPlayer2Score(): void
     {
         $this->player2Point++;
+    }
+
+    private function convertScoreToString(int $score): string 
+    {
+        return match($score) {
+            0 => 'Love',
+            1 => 'Fifteen',
+            2 => 'Thirty',
+            3 => 'Forty',
+            default => '',
+        };
     }
 }
