@@ -23,13 +23,8 @@ class TennisGame2 implements TennisGame
     public function getScore(): string
     {
         $score = '';
-        if ($this->player1Point === $this->player2Point && $this->player1Point < 4) {
-            $score = $this->convertScoreToString($this->player1Point);
-            $score .= '-All';
-        }
-
-        if ($this->player1Point === $this->player2Point && $this->player1Point >= 3) {
-            $score = 'Deuce';
+        if ($this->player1Point === $this->player2Point) {
+            $score = $this->convertEqualityScoreToString($this->player1Point);
         }
 
         if ($this->player1Point > 0 && $this->player2Point === 0) {
@@ -122,6 +117,16 @@ class TennisGame2 implements TennisGame
             2 => 'Thirty',
             3 => 'Forty',
             default => '',
+        };
+    }
+
+    private function convertEqualityScoreToString(int $score): string 
+    {
+        return match($score) {
+            0 => 'Love-All',
+            1 => 'Fifteen-All',
+            2 => 'Thirty-All',
+            default => 'Deuce',
         };
     }
 }
