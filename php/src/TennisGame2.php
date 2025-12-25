@@ -122,19 +122,19 @@ class TennisGame2 implements TennisGame
 
     public function wonPoint(string $player): void
     {
-        if ($player === 'player1') {
-            $this->P1Score();
+        if ($player === $this->player1Name) {
+            $this->incrementPlayer1Score();
         } else {
-            $this->P2Score();
+            $this->incrementPlayer2Score();
         }
     }
 
-    private function P1Score(): void
+    private function incrementPlayer1Score(): void
     {
         $this->player1Point++;
     }
 
-    private function P2Score(): void
+    private function incrementPlayer2Score(): void
     {
         $this->player2Point++;
     }
