@@ -6,13 +6,13 @@ namespace TennisGame;
 
 class TennisGame2 implements TennisGame
 {
-    private int $P1point = 0;
+    private int $player1Point = 0;
 
-    private int $P2point = 0;
+    private int $player2Point = 0;
 
-    private string $P1res = '';
+    private string $player1Result = '';
 
-    private string $P2res = '';
+    private string $player2Result = '';
 
     public function __construct(
         private string $player1Name,
@@ -23,98 +23,30 @@ class TennisGame2 implements TennisGame
     public function getScore(): string
     {
         $score = '';
-        if ($this->P1point === $this->P2point && $this->P1point < 4) {
-            if ($this->P1point === 0) {
-                $score = 'Love';
-            }
-            if ($this->P1point === 1) {
-                $score = 'Fifteen';
-            }
-            if ($this->P1point === 2) {
-                $score = 'Thirty';
-            }
-            $score .= '-All';
+        if ($this->player1Point === $this->player2Point) {
+            $score = $this->convertEqualityScoreToString($this->player1Point);
         }
 
-        if ($this->P1point === $this->P2point && $this->P1point >= 3) {
-            $score = 'Deuce';
+        if ($this->player1Point !== $this->player2Point && max($this->player1Point, $this->player2Point) < 4) {
+            $this->player1Result = $this->convertScoreToString($this->player1Point);
+            $this->player2Result = $this->convertScoreToString($this->player2Point);
+            $score = "{$this->player1Result}-{$this->player2Result}";
         }
 
-        if ($this->P1point > 0 && $this->P2point === 0) {
-            if ($this->P1point === 1) {
-                $this->P1res = 'Fifteen';
-            }
-            if ($this->P1point === 2) {
-                $this->P1res = 'Thirty';
-            }
-            if ($this->P1point === 3) {
-                $this->P1res = 'Forty';
-            }
-
-            $this->P2res = 'Love';
-            $score = "{$this->P1res}-{$this->P2res}";
+        if ($this->player1Point > $this->player2Point && $this->player2Point >= 3) {
+            $score = 'Advantage ' . $this->player1Name;
         }
 
-        if ($this->P2point > 0 && $this->P1point === 0) {
-            if ($this->P2point === 1) {
-                $this->P2res = 'Fifteen';
-            }
-            if ($this->P2point === 2) {
-                $this->P2res = 'Thirty';
-            }
-            if ($this->P2point === 3) {
-                $this->P2res = 'Forty';
-            }
-            $this->P1res = 'Love';
-            $score = "{$this->P1res}-{$this->P2res}";
+        if ($this->player2Point > $this->player1Point && $this->player1Point >= 3) {
+            $score = 'Advantage ' . $this->player2Name;
         }
 
-        if ($this->P1point > $this->P2point && $this->P1point < 4) {
-            if ($this->P1point === 2) {
-                $this->P1res = 'Thirty';
-            }
-            if ($this->P1point === 3) {
-                $this->P1res = 'Forty';
-            }
-            if ($this->P2point === 1) {
-                $this->P2res = 'Fifteen';
-            }
-            if ($this->P2point === 2) {
-                $this->P2res = 'Thirty';
-            }
-            $score = "{$this->P1res}-{$this->P2res}";
+        if ($this->player1Point >= 4 && $this->player2Point >= 0 && ($this->player1Point - $this->player2Point) >= 2) {
+            $score = 'Win for ' . $this->player1Name;
         }
 
-        if ($this->P2point > $this->P1point && $this->P2point < 4) {
-            if ($this->P2point === 2) {
-                $this->P2res = 'Thirty';
-            }
-            if ($this->P2point === 3) {
-                $this->P2res = 'Forty';
-            }
-            if ($this->P1point === 1) {
-                $this->P1res = 'Fifteen';
-            }
-            if ($this->P1point === 2) {
-                $this->P1res = 'Thirty';
-            }
-            $score = "{$this->P1res}-{$this->P2res}";
-        }
-
-        if ($this->P1point > $this->P2point && $this->P2point >= 3) {
-            $score = 'Advantage player1';
-        }
-
-        if ($this->P2point > $this->P1point && $this->P1point >= 3) {
-            $score = 'Advantage player2';
-        }
-
-        if ($this->P1point >= 4 && $this->P2point >= 0 && ($this->P1point - $this->P2point) >= 2) {
-            $score = 'Win for player1';
-        }
-
-        if ($this->P2point >= 4 && $this->P1point >= 0 && ($this->P2point - $this->P1point) >= 2) {
-            $score = 'Win for player2';
+        if ($this->player2Point >= 4 && $this->player1Point >= 0 && ($this->player2Point - $this->player1Point) >= 2) {
+            $score = 'Win for ' . $this->player2Name;
         }
 
         return $score;
@@ -122,34 +54,41 @@ class TennisGame2 implements TennisGame
 
     public function wonPoint(string $player): void
     {
-        if ($player === 'player1') {
-            $this->P1Score();
+        if ($player === $this->player1Name) {
+            $this->incrementPlayer1Score();
         } else {
-            $this->P2Score();
+            $this->incrementPlayer2Score();
         }
     }
 
-    private function SetP1Score(int $number): void
+    private function incrementPlayer1Score(): void
     {
-        for ($i = 0; $i < $number; $i++) {
-            $this->P1Score();
-        }
+        $this->player1Point++;
     }
 
-    private function SetP2Score(int $number): void
+    private function incrementPlayer2Score(): void
     {
-        for ($i = 0; $i < $number; $i++) {
-            $this->P2Score();
-        }
+        $this->player2Point++;
     }
 
-    private function P1Score(): void
+    private function convertScoreToString(int $score): string 
     {
-        $this->P1point++;
+        return match($score) {
+            0 => 'Love',
+            1 => 'Fifteen',
+            2 => 'Thirty',
+            3 => 'Forty',
+            default => '',
+        };
     }
 
-    private function P2Score(): void
+    private function convertEqualityScoreToString(int $score): string 
     {
-        $this->P2point++;
+        return match($score) {
+            0 => 'Love-All',
+            1 => 'Fifteen-All',
+            2 => 'Thirty-All',
+            default => 'Deuce',
+        };
     }
 }
