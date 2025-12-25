@@ -6,13 +6,13 @@ namespace TennisGame;
 
 class TennisGame2 implements TennisGame
 {
-    private int $P1point = 0;
+    private int $player1Point = 0;
 
-    private int $P2point = 0;
+    private int $player2Point = 0;
 
-    private string $P1res = '';
+    private string $p1Result = '';
 
-    private string $P2res = '';
+    private string $pResult = '';
 
     public function __construct(
         private string $player1Name,
@@ -23,97 +23,97 @@ class TennisGame2 implements TennisGame
     public function getScore(): string
     {
         $score = '';
-        if ($this->P1point === $this->P2point && $this->P1point < 4) {
-            if ($this->P1point === 0) {
+        if ($this->player1Point === $this->player2Point && $this->player1Point < 4) {
+            if ($this->player1Point === 0) {
                 $score = 'Love';
             }
-            if ($this->P1point === 1) {
+            if ($this->player1Point === 1) {
                 $score = 'Fifteen';
             }
-            if ($this->P1point === 2) {
+            if ($this->player1Point === 2) {
                 $score = 'Thirty';
             }
             $score .= '-All';
         }
 
-        if ($this->P1point === $this->P2point && $this->P1point >= 3) {
+        if ($this->player1Point === $this->player2Point && $this->player1Point >= 3) {
             $score = 'Deuce';
         }
 
-        if ($this->P1point > 0 && $this->P2point === 0) {
-            if ($this->P1point === 1) {
-                $this->P1res = 'Fifteen';
+        if ($this->player1Point > 0 && $this->player2Point === 0) {
+            if ($this->player1Point === 1) {
+                $this->p1Result = 'Fifteen';
             }
-            if ($this->P1point === 2) {
-                $this->P1res = 'Thirty';
+            if ($this->player1Point === 2) {
+                $this->p1Result = 'Thirty';
             }
-            if ($this->P1point === 3) {
-                $this->P1res = 'Forty';
+            if ($this->player1Point === 3) {
+                $this->p1Result = 'Forty';
             }
 
-            $this->P2res = 'Love';
-            $score = "{$this->P1res}-{$this->P2res}";
+            $this->pResult = 'Love';
+            $score = "{$this->p1Result}-{$this->pResult}";
         }
 
-        if ($this->P2point > 0 && $this->P1point === 0) {
-            if ($this->P2point === 1) {
-                $this->P2res = 'Fifteen';
+        if ($this->player2Point > 0 && $this->player1Point === 0) {
+            if ($this->player2Point === 1) {
+                $this->pResult = 'Fifteen';
             }
-            if ($this->P2point === 2) {
-                $this->P2res = 'Thirty';
+            if ($this->player2Point === 2) {
+                $this->pResult = 'Thirty';
             }
-            if ($this->P2point === 3) {
-                $this->P2res = 'Forty';
+            if ($this->player2Point === 3) {
+                $this->pResult = 'Forty';
             }
-            $this->P1res = 'Love';
-            $score = "{$this->P1res}-{$this->P2res}";
+            $this->p1Result = 'Love';
+            $score = "{$this->p1Result}-{$this->pResult}";
         }
 
-        if ($this->P1point > $this->P2point && $this->P1point < 4) {
-            if ($this->P1point === 2) {
-                $this->P1res = 'Thirty';
+        if ($this->player1Point > $this->player2Point && $this->player1Point < 4) {
+            if ($this->player1Point === 2) {
+                $this->p1Result = 'Thirty';
             }
-            if ($this->P1point === 3) {
-                $this->P1res = 'Forty';
+            if ($this->player1Point === 3) {
+                $this->p1Result = 'Forty';
             }
-            if ($this->P2point === 1) {
-                $this->P2res = 'Fifteen';
+            if ($this->player2Point === 1) {
+                $this->pResult = 'Fifteen';
             }
-            if ($this->P2point === 2) {
-                $this->P2res = 'Thirty';
+            if ($this->player2Point === 2) {
+                $this->pResult = 'Thirty';
             }
-            $score = "{$this->P1res}-{$this->P2res}";
+            $score = "{$this->p1Result}-{$this->pResult}";
         }
 
-        if ($this->P2point > $this->P1point && $this->P2point < 4) {
-            if ($this->P2point === 2) {
-                $this->P2res = 'Thirty';
+        if ($this->player2Point > $this->player1Point && $this->player2Point < 4) {
+            if ($this->player2Point === 2) {
+                $this->pResult = 'Thirty';
             }
-            if ($this->P2point === 3) {
-                $this->P2res = 'Forty';
+            if ($this->player2Point === 3) {
+                $this->pResult = 'Forty';
             }
-            if ($this->P1point === 1) {
-                $this->P1res = 'Fifteen';
+            if ($this->player1Point === 1) {
+                $this->p1Result = 'Fifteen';
             }
-            if ($this->P1point === 2) {
-                $this->P1res = 'Thirty';
+            if ($this->player1Point === 2) {
+                $this->p1Result = 'Thirty';
             }
-            $score = "{$this->P1res}-{$this->P2res}";
+            $score = "{$this->p1Result}-{$this->pResult}";
         }
 
-        if ($this->P1point > $this->P2point && $this->P2point >= 3) {
+        if ($this->player1Point > $this->player2Point && $this->player2Point >= 3) {
             $score = 'Advantage player1';
         }
 
-        if ($this->P2point > $this->P1point && $this->P1point >= 3) {
+        if ($this->player2Point > $this->player1Point && $this->player1Point >= 3) {
             $score = 'Advantage player2';
         }
 
-        if ($this->P1point >= 4 && $this->P2point >= 0 && ($this->P1point - $this->P2point) >= 2) {
+        if ($this->player1Point >= 4 && $this->player2Point >= 0 && ($this->player1Point - $this->player2Point) >= 2) {
             $score = 'Win for player1';
         }
 
-        if ($this->P2point >= 4 && $this->P1point >= 0 && ($this->P2point - $this->P1point) >= 2) {
+        if ($this->player2Point >= 4 && $this->player1Point >= 0 && ($this->player2Point - $this->player1Point) >= 2) {
             $score = 'Win for player2';
         }
 
@@ -145,11 +145,11 @@ class TennisGame2 implements TennisGame
 
     private function P1Score(): void
     {
-        $this->P1point++;
+        $this->player1Point++;
     }
 
     private function P2Score(): void
     {
-        $this->P2point++;
+        $this->player2Point++;
     }
 }
