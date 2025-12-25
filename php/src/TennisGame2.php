@@ -27,13 +27,7 @@ class TennisGame2 implements TennisGame
             $score = $this->convertEqualityScoreToString($this->player1Point);
         }
 
-        if ($this->player1Point > $this->player2Point && $this->player1Point < 4) {
-            $this->player1Result = $this->convertScoreToString($this->player1Point);
-            $this->player2Result = $this->convertScoreToString($this->player2Point);
-            $score = "{$this->player1Result}-{$this->player2Result}";
-        }
-
-        if ($this->player2Point > $this->player1Point && $this->player2Point < 4) {
+        if ($this->player1Point !== $this->player2Point && max($this->player1Point, $this->player2Point) < 4) {
             $this->player1Result = $this->convertScoreToString($this->player1Point);
             $this->player2Result = $this->convertScoreToString($this->player2Point);
             $score = "{$this->player1Result}-{$this->player2Result}";
