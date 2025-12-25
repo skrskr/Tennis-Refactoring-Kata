@@ -40,34 +40,14 @@ class TennisGame2 implements TennisGame
         }
 
         if ($this->player1Point > $this->player2Point && $this->player1Point < 4) {
-            if ($this->player1Point === 2) {
-                $this->player1Result = $this->convertScoreToString($this->player1Point);
-            }
-            if ($this->player1Point === 3) {
-                $this->player1Result = $this->convertScoreToString($this->player1Point);
-            }
-            if ($this->player2Point === 1) {
-                $this->player2Result = $this->convertScoreToString($this->player2Point);
-            }
-            if ($this->player2Point === 2) {
-                $this->player2Result = $this->convertScoreToString($this->player2Point);
-            }
+            $this->player1Result = $this->convertScoreToString($this->player1Point);
+            $this->player2Result = $this->convertScoreToString($this->player2Point);
             $score = "{$this->player1Result}-{$this->player2Result}";
         }
 
         if ($this->player2Point > $this->player1Point && $this->player2Point < 4) {
-            if ($this->player2Point === 2) {
-                $this->player2Result = $this->convertScoreToString($this->player2Point);
-            }
-            if ($this->player2Point === 3) {
-                $this->player2Result = $this->convertScoreToString($this->player2Point);
-            }
-            if ($this->player1Point === 1) {
-                $this->player1Result = $this->convertScoreToString($this->player1Point);
-            }
-            if ($this->player1Point === 2) {
-                $this->player1Result = $this->convertScoreToString($this->player1Point);
-            }
+            $this->player1Result = $this->convertScoreToString($this->player1Point);
+            $this->player2Result = $this->convertScoreToString($this->player2Point);
             $score = "{$this->player1Result}-{$this->player2Result}";
         }
 
